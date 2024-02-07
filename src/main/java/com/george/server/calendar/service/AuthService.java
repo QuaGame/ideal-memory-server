@@ -2,7 +2,7 @@ package com.george.server.calendar.service;
 
 import com.george.server.calendar.dto.JwtResponse;
 import com.george.server.calendar.dto.LoginRequest;
-import com.george.server.calendar.dto.MessageResponse;
+import com.george.server.calendar.dto.ObjectMessageResponse;
 import com.george.server.calendar.dto.RegisterRequest;
 import com.george.server.calendar.model.Role;
 import com.george.server.calendar.model.User;
@@ -12,7 +12,6 @@ import com.george.server.calendar.service.user.UserDetailsImpl;
 import com.george.server.calendar.util.ERole;
 import com.george.server.calendar.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -59,14 +58,14 @@ public class AuthService {
         return new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles);
     }
 
-    public MessageResponse<?> registerUser(RegisterRequest registerRequest) {
+    public ObjectMessageResponse<?> registerUser(RegisterRequest registerRequest) {
 
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
-            return new MessageResponse<>("Error: Username is already taken", null);
+            return new ObjectMessageResponse<>("Error: Username is already taken", null);
         }
 
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
-            return new MessageResponse<>("Error: Email is already in use!", null);
+            return new ObjectMessageResponse<>("Error: Email is already in use!", null);
         }
 
         User user = new User(registerRequest.getUsername(),
@@ -102,7 +101,7 @@ public class AuthService {
         user.setRoles(roles);
         User _user = userRepository.save(user);
 
-        return new MessageResponse<>("User registered successfully!", _user);
+        return new ObjectMessageResponse<>("User registered successfully!", _user);
     }
 
     private Role getRole(ERole eRole) {

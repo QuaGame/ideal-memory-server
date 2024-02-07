@@ -2,7 +2,7 @@ package com.george.server.calendar.controller;
 
 import com.george.server.calendar.dto.JwtResponse;
 import com.george.server.calendar.dto.LoginRequest;
-import com.george.server.calendar.dto.MessageResponse;
+import com.george.server.calendar.dto.ObjectMessageResponse;
 import com.george.server.calendar.dto.RegisterRequest;
 import com.george.server.calendar.service.AuthService;
 import javax.validation.Valid;
@@ -27,8 +27,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
-        MessageResponse<?> messageResponse = authService.registerUser(registerRequest);
-        return new ResponseEntity<>(messageResponse, HttpStatus.OK);
+        ObjectMessageResponse<?> objectMessageResponse = authService.registerUser(registerRequest);
+        return new ResponseEntity<>(objectMessageResponse, HttpStatus.OK);
     }
 
 }

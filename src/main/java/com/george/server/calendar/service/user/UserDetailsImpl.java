@@ -18,8 +18,9 @@ import java.util.stream.Collectors;
 public class UserDetailsImpl implements UserDetails {
 
     private final Long id;
-    private final String name;
+    private final String username;
     private final String email;
+
     @JsonIgnore
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
@@ -44,7 +45,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return this.username;
     }
 
     @Override

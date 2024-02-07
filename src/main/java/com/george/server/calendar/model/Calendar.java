@@ -19,8 +19,8 @@ public class Calendar {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-
     private String name;
+    private String username;
 
     @OneToMany(mappedBy = "calendar",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Event> events = new LinkedHashSet<>();

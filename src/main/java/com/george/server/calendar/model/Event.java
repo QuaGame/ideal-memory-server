@@ -29,4 +29,8 @@ public class Event {
     @JsonIgnore
     private Calendar calendar;
 
+    public Event(String name, Calendar calendar) {
+        this.name = name;
+        this.calendar = calendar;
+    }
 }

@@ -1,31 +1,33 @@
 package com.george.server.calendar.controller;
 
+import com.george.server.calendar.dto.ObjectMessageResponse;
 import com.george.server.calendar.model.Calendar;
 import com.george.server.calendar.service.CalendarService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequestMapping("/calendar")
 public class CalendarController {
 
     @Autowired
     private CalendarService calendarService;
 
-    @PostMapping("/create.calendar")
-    private ResponseEntity<Calendar> createCalendar(@RequestBody Calendar calendar) {
-        Calendar _calendar = calendarService.createCalendar(calendar);
-        return new ResponseEntity<>(_calendar, HttpStatus.CREATED);
+    @PostMapping("/create")
+    private ResponseEntity<?> createCalendar(@RequestBody Calendar calendar, Principal principal) {
+        ObjectMessageResponse<?> objectMessageResponse = calendarService.createCalendar(calendar, principal);
+        return new ResponseEntity<>(objectMessageResponse, HttpStatus.CREATED);
     }
 
-    @GetMapping("/get.calendars")
-    private ResponseEntity<List<Calendar>> getAllCalendars() {
-        List<Calendar> pageCalendars = calendarService.getAllCalendars();
+    @GetMapping("/get")
+    private ResponseEntity<List<Calendar>> getAllCalendars(Principal principal) {
+        List<Calendar> pageCalendars = calendarService.getAllCalendars(principal);
         return new ResponseEntity<>(pageCalendars, HttpStatus.OK);
     }
 
